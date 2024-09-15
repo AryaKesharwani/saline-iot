@@ -18,20 +18,10 @@ const SalineSystemDashboardInner = ({ pollingInterval = 500 }) => {
           <div className="flex items-center space-x-2">
             <Box className="text-green-500" />
             <h1 className="text-xl font-semibold">Saline System</h1>
-            <span className="text-red-500 text-sm">Offline</span>
-          </div>
-          <div className="flex space-x-2">
-            <button className="bg-green-500 text-white px-3 py-1 rounded text-sm">saline</button>
-            <button className="bg-blue-500 text-white px-3 py-1 rounded text-sm">servo</button>
           </div>
         </header>
 
-        <nav className="flex justify-center sm:justify-start space-x-4 mb-6">
-          <button className="text-gray-400 hover:text-white"><Activity size={20} /></button>
-          <button className="text-gray-400 hover:text-white"><BarChart2 size={20} /></button>
-          <button className="text-gray-400 hover:text-white"><Users size={20} /></button>
-          <button className="text-gray-400 hover:text-white"><Map size={20} /></button>
-        </nav>
+
 
         <main className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="mb-6">
@@ -76,10 +66,6 @@ const SalineSystemDashboardInner = ({ pollingInterval = 500 }) => {
                 </>
               )}
             </div>
-            {/* <div className="flex justify-between mt-2">
-              <span>0</span>
-              <span>1,000</span>
-            </div> */}
           </div>
 
           <div className="flex flex-col justify-center items-center md:items-start">
