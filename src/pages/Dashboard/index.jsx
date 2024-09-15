@@ -4,6 +4,7 @@ import { useQuery, QueryClient, QueryClientProvider } from '@tanstack/react-quer
 import { fetchSalineLevel } from "./_service"
 
 const REFRESH_INTERVAL = 6000; // 6 seconds
+const MAX_SALINE_LEVEL = 1000;
 
 const SalineSystemDashboardInner = () => {
   const [countdown, setCountdown] = useState(REFRESH_INTERVAL / 1000);
@@ -27,6 +28,13 @@ const SalineSystemDashboardInner = () => {
   useEffect(() => {
     setCountdown(REFRESH_INTERVAL / 1000);
   }, [dataUpdatedAt]);
+
+  // Calculate the percentage of the circle to fill
+  const calculateStrokeDasharray = (level) => {
+    const circumference = 2 * Math.PI * 45; // 45 is the radius of the circle
+    const fillPercentage = level / MAX_SALINE_LEVEL;
+    return `${fillPercentage * circumference} ${circumference}`;
+  };
 
   return (
     <div className="bg-gray-900 text-white p-4 sm:p-6 min-h-screen">
@@ -73,7 +81,7 @@ const SalineSystemDashboardInner = () => {
                       r="45"
                       cx="50"
                       cy="50"
-                      strokeDasharray={`${salineLevel * 2.83} 283`}
+                      strokeDasharray={calculateStrokeDasharray(salineLevel)}
                       strokeDashoffset="0"
                       transform="rotate(-90 50 50)"
                     />
@@ -83,6 +91,10 @@ const SalineSystemDashboardInner = () => {
                   </div>
                 </>
               )}
+            </div>
+            <div className="flex justify-between mt-2">
+              <span>0 g</span>
+              <span>{MAX_SALINE_LEVEL} g</span>
             </div>
           </div>
 
