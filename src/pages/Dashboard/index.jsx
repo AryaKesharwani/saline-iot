@@ -1,15 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box } from 'lucide-react';
 import { useQuery, QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import {fetchSalineLevel} from "./_service"
+import { fetchSalineLevel } from "./_service"
 
-const SalineSystemDashboardInner = ({ pollingInterval = 500 }) => {
+const REFRESH_INTERVAL = 6000; // 6 seconds
 
-  const { data: salineLevel, isLoading, isError } = useQuery({
-    queryKey: ['salineLevel',pollingInterval+1],
+const SalineSystemDashboardInner = () => {
+  const [countdown, setCountdown] = useState(REFRESH_INTERVAL / 1000);
+
+  const { data: salineLevel, isLoading, isError, dataUpdatedAt } = useQuery({
+    queryKey: ['salineLevel'],
     queryFn: fetchSalineLevel,
-    refetchInterval: pollingInterval,
+    refetchInterval: REFRESH_INTERVAL,
   });
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCountdown(prevCountdown => 
+        prevCountdown > 0 ? prevCountdown - 1 : REFRESH_INTERVAL / 1000
+      );
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    setCountdown(REFRESH_INTERVAL / 1000);
+  }, [dataUpdatedAt]);
 
   return (
     <div className="bg-gray-900 text-white p-4 sm:p-6 min-h-screen">
@@ -19,9 +36,10 @@ const SalineSystemDashboardInner = ({ pollingInterval = 500 }) => {
             <Box className="text-green-500" />
             <h1 className="text-xl font-semibold">Saline System</h1>
           </div>
+          <div className="text-sm">
+            Next refresh in: <span className="font-bold">{countdown}</span> seconds
+          </div>
         </header>
-
-
 
         <main className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="mb-6">
@@ -69,6 +87,12 @@ const SalineSystemDashboardInner = ({ pollingInterval = 500 }) => {
           </div>
 
           <div className="flex flex-col justify-center items-center md:items-start">
+            <p className="text-lg">
+              Data refreshes every {REFRESH_INTERVAL / 1000} seconds.
+            </p>
+            <p className="text-sm mt-2">
+              Last updated: {new Date(dataUpdatedAt).toLocaleTimeString()}
+            </p>
           </div>
         </main>
       </div>
