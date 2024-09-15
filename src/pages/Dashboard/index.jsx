@@ -1,10 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Activity, Users, Map, BarChart2 } from 'lucide-react';
 import { useQuery, QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import {fetchSalineLevel} from "_service.js"
-
-
-
+import {fetchSalineLevel} from "./_service"
 
 const SalineSystemDashboardInner = ({ pollingInterval = 500 }) => {
 
@@ -79,26 +76,13 @@ const SalineSystemDashboardInner = ({ pollingInterval = 500 }) => {
                 </>
               )}
             </div>
-            <div className="flex justify-between mt-2">
+            {/* <div className="flex justify-between mt-2">
               <span>0</span>
               <span>1,000</span>
-            </div>
+            </div> */}
           </div>
 
           <div className="flex flex-col justify-center items-center md:items-start">
-            {/* <h2 className="text-lg mb-2">servo Switch</h2> */}
-            {/* <button
-              className={`w-16 h-8 rounded-full p-1 transition-colors duration-200 ease-in-out ${
-                servoSwitch ? 'bg-green-500' : 'bg-gray-700'
-              }`}
-              onClick={() => setServoSwitch(!servoSwitch)}
-            >
-              <div
-                className={`bg-white w-6 h-6 rounded-full shadow-md transform transition-transform duration-200 ease-in-out ${
-                  servoSwitch ? 'translate-x-8' : ''
-                }`}
-              />
-            </button> */}
           </div>
         </main>
       </div>
