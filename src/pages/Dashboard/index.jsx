@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Activity, Users, Map, BarChart2 } from 'lucide-react';
+import { Box } from 'lucide-react';
 import { useQuery, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import {fetchSalineLevel} from "./_service"
 
